@@ -2,188 +2,166 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => (
-  <nav style={{ 
-    padding: '1rem', 
-    background: '#333', 
-    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
-    display: 'flex', 
-    justifyContent: 'flex-start', 
-    alignItems: 'center' 
-  }}>
-    <ul style={{ 
-      listStyle: 'none', 
-      display: 'flex', 
-      gap: '1.5rem', 
-      margin: 0 
-    }}>
+  <nav
+    style={{
+      padding: '1rem',
+      background: 'black', // Changed the background to black
+      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+      display: 'flex',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+    }}
+  >
+    <ul
+      style={{
+        listStyle: 'none',
+        display: 'flex',
+        gap: '1.5rem',
+        margin: 0,
+      }}
+    >
       <li>
-        <Link to="/" 
+        <Link
+          to="/"
           style={{
-            textDecoration: 'none',
-            color: '#fff',
+            textDecoration: 'none',        // No underline
+            color: 'white',                // White text color
             fontSize: '1.1rem',
             padding: '0.5rem 1.5rem',
-            backgroundColor: '#3498db',
+            backgroundColor: 'transparent', // No background
             borderRadius: '8px',
             textAlign: 'center',
             transition: 'all 0.3s ease',
             position: 'relative',
-            fontWeight: '500',
-            boxShadow: '0 4px 6px rgba(12, 152, 219, 0.3)' 
+            fontWeight: 'bold',            // Bold text
+            boxShadow: 'none',             // No box shadow
+            display: 'inline-block',       // Required for the expanding effect
           }}
           onMouseOver={(e) => {
-            e.target.style.backgroundColor = '#2980b9';
-            e.target.style.transform = 'translateY(-3px)';
-            e.target.style.boxShadow = '0 6px 12px rgba(52, 152, 219, 0.4)';
+            e.target.style.transform = 'scale(1.1)';
+            e.target.style.transition = 'all 0.3s ease';
           }}
           onMouseOut={(e) => {
-            e.target.style.backgroundColor = '#3498db';
-            e.target.style.transform = 'translateY(0)';
-            e.target.style.boxShadow = '0 4px 6px rgba(52, 152, 219, 0.3)';
-          }}
-          onClick={(e) => {
-            e.target.style.transform = 'translateY(1px)';
-            e.target.style.boxShadow = '0 2px 4px rgba(52, 152, 219, 0.2)';
+            e.target.style.transform = 'scale(1)';
           }}
         >
           Home
         </Link>
       </li>
       <li>
-        <Link to="/Login"
+        <Link
+          to="/Login"
           style={{
             textDecoration: 'none',
-            color: '#fff',
+            color: 'white',
             fontSize: '1.1rem',
             padding: '0.5rem 1.5rem',
-            backgroundColor: '#3498db',
+            backgroundColor: 'transparent',
             borderRadius: '8px',
             textAlign: 'center',
             transition: 'all 0.3s ease',
             position: 'relative',
-            fontWeight: '500',
-            boxShadow: '0 4px 6px rgba(52, 152, 219, 0.3)' 
+            fontWeight: 'bold',
+            boxShadow: 'none',
+            display: 'inline-block',
           }}
           onMouseOver={(e) => {
-            e.target.style.backgroundColor = '#2980b9';
-            e.target.style.transform = 'translateY(-3px)';
-            e.target.style.boxShadow = '0 6px 12px rgba(52, 152, 219, 0.4)';
+            e.target.style.transform = 'scale(1.1)';
+            e.target.style.transition = 'all 0.3s ease';
           }}
           onMouseOut={(e) => {
-            e.target.style.backgroundColor = '#3498db';
-            e.target.style.transform = 'translateY(0)';
-            e.target.style.boxShadow = '0 4px 6px rgba(52, 152, 219, 0.3)';
-          }}
-          onClick={(e) => {
-            e.target.style.transform = 'translateY(1px)';
-            e.target.style.boxShadow = '0 2px 4px rgba(52, 152, 219, 0.2)';
+            e.target.style.transform = 'scale(1)';
           }}
         >
           Login
         </Link>
       </li>
       <li>
-        <Link to="/Signup"
+        <Link
+          to="/Signup"
           style={{
             textDecoration: 'none',
-            color: '#fff',
+            color: 'white',
             fontSize: '1.1rem',
             padding: '0.5rem 1.5rem',
-            backgroundColor: '#3498db',
+            backgroundColor: 'transparent',
             borderRadius: '8px',
             textAlign: 'center',
             transition: 'all 0.3s ease',
             position: 'relative',
-            fontWeight: '500',
-            boxShadow: '0 4px 6px rgba(52, 152, 219, 0.3)' 
+            fontWeight: 'bold',
+            boxShadow: 'none',
+            display: 'inline-block',
           }}
           onMouseOver={(e) => {
-            e.target.style.backgroundColor = '#2980b9';
-            e.target.style.transform = 'translateY(-3px)';
-            e.target.style.boxShadow = '0 6px 12px rgba(52, 152, 219, 0.4)';
+            e.target.style.transform = 'scale(1.1)';
+            e.target.style.transition = 'all 0.3s ease';
           }}
           onMouseOut={(e) => {
-            e.target.style.backgroundColor = '#3498db';
-            e.target.style.transform = 'translateY(0)';
-            e.target.style.boxShadow = '0 4px 6px rgba(52, 152, 219, 0.3)';
-          }}
-          onClick={(e) => {
-            e.target.style.transform = 'translateY(1px)';
-            e.target.style.boxShadow = '0 2px 4px rgba(52, 152, 219, 0.2)';
+            e.target.style.transform = 'scale(1)';
           }}
         >
           Signup
         </Link>
       </li>
       <li>
-        <Link to="/Expenses"
+        <Link
+          to="/Expenses"
           style={{
             textDecoration: 'none',
-            color: '#fff',
+            color: 'white',
             fontSize: '1.1rem',
             padding: '0.5rem 1.5rem',
-            backgroundColor: '#3498db',
+            backgroundColor: 'transparent',
             borderRadius: '8px',
             textAlign: 'center',
             transition: 'all 0.3s ease',
             position: 'relative',
-            fontWeight: '500',
-            boxShadow: '0 4px 6px rgba(52, 152, 219, 0.3)' 
+            fontWeight: 'bold',
+            boxShadow: 'none',
+            display: 'inline-block',
           }}
           onMouseOver={(e) => {
-            e.target.style.backgroundColor = '#2980b9';
-            e.target.style.transform = 'translateY(-3px)';
-            e.target.style.boxShadow = '0 6px 12px rgba(52, 152, 219, 0.4)';
+            e.target.style.transform = 'scale(1.1)';
+            e.target.style.transition = 'all 0.3s ease';
           }}
           onMouseOut={(e) => {
-            e.target.style.backgroundColor = '#3498db';
-            e.target.style.transform = 'translateY(0)';
-            e.target.style.boxShadow = '0 4px 6px rgba(52, 152, 219, 0.3)';
-          }}
-          onClick={(e) => {
-            e.target.style.transform = 'translateY(1px)';
-            e.target.style.boxShadow = '0 2px 4px rgba(52, 152, 219, 0.2)';
+            e.target.style.transform = 'scale(1)';
           }}
         >
           Expenses
         </Link>
       </li>
       <li>
-        <Link to="/ExchangeRate"
+        <Link
+          to="/ExchangeRate"
           style={{
             textDecoration: 'none',
-            color: '#fff',
+            color: 'white',
             fontSize: '1.1rem',
             padding: '0.5rem 1.5rem',
-            backgroundColor: '#3498db',
+            backgroundColor: 'transparent',
             borderRadius: '8px',
             textAlign: 'center',
             transition: 'all 0.3s ease',
             position: 'relative',
-            fontWeight: '500',
-            boxShadow: '0 4px 6px rgba(52, 152, 219, 0.3)' 
+            fontWeight: 'bold',
+            boxShadow: 'none',
+            display: 'inline-block',
           }}
           onMouseOver={(e) => {
-            e.target.style.backgroundColor = '#2980b9';
-            e.target.style.transform = 'translateY(-3px)';
-            e.target.style.boxShadow = '0 6px 12px rgba(52, 152, 219, 0.4)';
+            e.target.style.transform = 'scale(1.1)';
+            e.target.style.transition = 'all 0.3s ease';
           }}
           onMouseOut={(e) => {
-            e.target.style.backgroundColor = '#3498db';
-            e.target.style.transform = 'translateY(0)';
-            e.target.style.boxShadow = '0 4px 6px rgba(52, 152, 219, 0.3)';
-          }}
-          onClick={(e) => {
-            e.target.style.transform = 'translateY(1px)';
-            e.target.style.boxShadow = '0 2px 4px rgba(52, 152, 219, 0.2)';
+            e.target.style.transform = 'scale(1)';
           }}
         >
           Currency Exchange
         </Link>
       </li>
-      
     </ul>
   </nav>
 );
 
-export default Navbar
+export default Navbar;
