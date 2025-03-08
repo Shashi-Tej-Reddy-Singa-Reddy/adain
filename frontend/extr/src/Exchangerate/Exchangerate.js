@@ -1,53 +1,58 @@
 // src/ExchangeRate.js
 import React, { useState } from 'react';
+import axios from 'axios';
+
+// Replace with your actual API key
+const apiKey = '2bdfe8cced5ff0e5202f8fcf';
 
 const ExchangeRate = () => {
-  const [rate, setRate] = useState(null);
-  const [baseCurrency, setBaseCurrency] = useState('USD');
-  const [targetCurrency, setTargetCurrency] = useState('EUR');
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  const [amount, setAmount] = useState('');
+  const [converted, setConverted] = useState(null);
 
-  const fetchExchangeRate = async () => {
+  const convertINRtoUSD = async (amountInINR) => {
     try {
-      const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${baseCurrency}`);
-      const data = await response.json();
-      const fetchedRate = data.rates[targetCurrency];
-      setRate(fetchedRate);
-      // Save the exchange rate details to the backend
-      await fetch('http://localhost:5001/api/exchange', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: currentUser._id,
-          baseCurrency,
-          targetCurrency,
-          rate: fetchedRate,
-          date: new Date().toISOString().split('T')[0]
-        })
-      });
+      // Make a request to the API to get the exchange rate for INR
+      const response = await axios.get(`https://v6.exchangerate-api.com/v6/${apiKey}/latest/INR`);
+      console.log("API called");
+
+      // Extract the conversion rate for INR to USD
+      const conversionRate = response.data.conversion_rates.USD;
+
+      // Calculate the amount in USD
+      const amountInUSD = amountInINR * conversionRate;
+
+      // Set the result in state
+      setConverted(amountInUSD.toFixed(2));
     } catch (error) {
-      console.error('Error fetching exchange rate:', error);
-      alert('Error fetching exchange rate.');
+      console.error('Error converting INR to USD:', error.message);
+    }
+  };
+
+  const handleConvert = (e) => {
+    e.preventDefault();
+    if (!isNaN(amount) && Number(amount) > 0) {
+      convertINRtoUSD(Number(amount));
     }
   };
 
   return (
     <div style={{ padding: '1rem' }}>
-      <h2>Currency Exchange</h2>
-      <div>
-        <label>
-          Base Currency:&nbsp;
-          <input type="text" value={baseCurrency} onChange={(e) => setBaseCurrency(e.target.value.toUpperCase())} />
-        </label>
-      </div>
-      <div>
-        <label>
-          Target Currency:&nbsp;
-          <input type="text" value={targetCurrency} onChange={(e) => setTargetCurrency(e.target.value.toUpperCase())} />
-        </label>
-      </div>
-      <button onClick={fetchExchangeRate}>Get Exchange Rate</button>
-      {rate && <p>1 {baseCurrency} = {rate} {targetCurrency}</p>}
+      <h2>Currency Exchange (INR to USD)</h2>
+      <form onSubmit={handleConvert}>
+        <div>
+          <label>
+            Amount in INR:&nbsp;
+            <input
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              required
+            />
+          </label>
+        </div>
+        <button type="submit">Convert</button>
+      </form>
+      {converted && <p>{amount} INR is equal to {converted} USD.</p>}
     </div>
   );
 };
