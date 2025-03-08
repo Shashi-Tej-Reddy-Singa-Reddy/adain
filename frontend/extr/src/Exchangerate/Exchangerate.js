@@ -7,41 +7,45 @@ const apiKey = '2bdfe8cced5ff0e5202f8fcf';
 
 const ExchangeRate = () => {
   const [amount, setAmount] = useState('');
+  const [baseCurrency, setBaseCurrency] = useState('INR');
+  const [targetCurrency, setTargetCurrency] = useState('USD');
   const [converted, setConverted] = useState(null);
 
-  const convertINRtoUSD = async (amountInINR) => {
+  const convertCurrency = async (amount, baseCurrency, targetCurrency) => {
     try {
-      // Make a request to the API to get the exchange rate for INR
-      const response = await axios.get(`https://v6.exchangerate-api.com/v6/${apiKey}/latest/INR`);
+      // Get the latest exchange rates for the base currency
+      const response = await axios.get(`https://v6.exchangerate-api.com/v6/${apiKey}/latest/${baseCurrency}`);
       console.log("API called");
 
-      // Extract the conversion rate for INR to USD
-      const conversionRate = response.data.conversion_rates.USD;
+      // Extract the conversion rate for the target currency
+      const conversionRate = response.data.conversion_rates[targetCurrency];
+      if (!conversionRate) {
+        throw new Error(`Conversion rate for ${targetCurrency} not found`);
+      }
 
-      // Calculate the amount in USD
-      const amountInUSD = amountInINR * conversionRate;
-
-      // Set the result in state
-      setConverted(amountInUSD.toFixed(2));
+      // Calculate the converted amount
+      const amountConverted = amount * conversionRate;
+      setConverted(amountConverted.toFixed(2));
     } catch (error) {
-      console.error('Error converting INR to USD:', error.message);
+      console.error('Error converting currency:', error.message);
+      setConverted(null);
     }
   };
 
   const handleConvert = (e) => {
     e.preventDefault();
     if (!isNaN(amount) && Number(amount) > 0) {
-      convertINRtoUSD(Number(amount));
+      convertCurrency(Number(amount), baseCurrency, targetCurrency);
     }
   };
 
   return (
     <div style={{ padding: '1rem' }}>
-      <h2>Currency Exchange (INR to USD)</h2>
+      <h2>Currency Exchange</h2>
       <form onSubmit={handleConvert}>
         <div>
           <label>
-            Amount in INR:&nbsp;
+            Amount:&nbsp;
             <input
               type="number"
               value={amount}
@@ -50,9 +54,35 @@ const ExchangeRate = () => {
             />
           </label>
         </div>
+        <div>
+          <label>
+            Base Currency:&nbsp;
+            <input
+              type="text"
+              value={baseCurrency}
+              onChange={(e) => setBaseCurrency(e.target.value.toUpperCase())}
+              required
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Target Currency:&nbsp;
+            <input
+              type="text"
+              value={targetCurrency}
+              onChange={(e) => setTargetCurrency(e.target.value.toUpperCase())}
+              required
+            />
+          </label>
+        </div>
         <button type="submit">Convert</button>
       </form>
-      {converted && <p>{amount} INR is equal to {converted} USD.</p>}
+      {converted && (
+        <p>
+          {amount} {baseCurrency} is equal to {converted} {targetCurrency}.
+        </p>
+      )}
     </div>
   );
 };
