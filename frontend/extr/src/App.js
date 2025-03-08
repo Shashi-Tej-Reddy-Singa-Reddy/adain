@@ -19,7 +19,7 @@ import Signup from './Signup/Signup';
 // import Signup from './Signup/Signup';
 import Expenses from './Expenses/Expenses';
 import ExchangeRate from './Exchangerate/Exchangerate';
-// impo
+import Recommendations from './Recommendations/Recommendations';
 function App() {
   return (
     <>
@@ -33,6 +33,7 @@ function App() {
               <Route path="/Signup" element={<Signup />} />
               <Route path="/Expenses" element={<Expenses />} />
               <Route path="/ExchangeRate" element={<ExchangeRate />} />
+              <Route path="/Recommendations" element={<Recommendations />} />
             </Routes>
           </main>
         </div>
