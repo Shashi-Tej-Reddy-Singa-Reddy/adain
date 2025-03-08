@@ -3,23 +3,17 @@ import React, { useState } from 'react';
 
 const Recommendations = () => {
   const [recommendation, setRecommendation] = useState('');
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   const fetchRecommendation = async () => {
     try {
-      // Placeholder API call – replace with the actual Google Gemini API endpoint and required headers/API key
+      // Replace the URL and payload as required by your AI API
       const response = await fetch('https://api.google.com/gemini/recommendations', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          // 'Authorization': 'Bearer YOUR_API_KEY'
-        },
-        body: JSON.stringify({
-          user_id: JSON.parse(localStorage.getItem('currentUser')).id,
-          // You can include additional expense data as needed
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: currentUser._id })
       });
       const data = await response.json();
-      // Assuming the API returns a field called "recommendation"
       setRecommendation(data.recommendation || 'No recommendation available at the moment.');
     } catch (error) {
       console.error('Error fetching AI recommendation:', error);

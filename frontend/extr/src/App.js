@@ -18,6 +18,8 @@ import Signup from './Signup/Signup';
 // import Recommendations from './Recommendations/Recommendations.js';
 // import Signup from './Signup/Signup';
 import Expenses from './Expenses/Expenses';
+import ExchangeRate from './Exchangerate/Exchangerate';
+// impo
 function App() {
   return (
     <>
@@ -30,6 +32,7 @@ function App() {
               <Route path="/Login" element={<Login />} />
               <Route path="/Signup" element={<Signup />} />
               <Route path="/Expenses" element={<Expenses />} />
+              <Route path="/ExchangeRate" element={<ExchangeRate />} />
             </Routes>
           </main>
         </div>

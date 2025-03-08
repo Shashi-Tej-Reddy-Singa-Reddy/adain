@@ -199,7 +199,7 @@ mongoose.connect(
   "mongodb+srv://21bd1a661tcsma:Shashi@shashireact.ebrjsgd.mongodb.net/adain?retryWrites=true&w=majority",
   { useNewUrlParser: true, useUnifiedTopology: true }
 )
-.then(() => console.log('MongoDB connected to newDatabaseName'))
+.then(() => console.log('MongoDB connected to adain'))
 .catch((err) => console.error('MongoDB connection error:', err));
 
 
