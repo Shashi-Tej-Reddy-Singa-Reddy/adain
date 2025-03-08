@@ -33,7 +33,7 @@ function App() {
               <Route path="/Signup" element={<Signup />} />
               <Route path="/Expenses" element={<Expenses />} />
               <Route path="/ExchangeRate" element={<ExchangeRate />} />
-              <Route path="/Recommendations" element={<Recommendations />} />
+              {/* <Route path="/Recommendations" element={<Recommendations />} /> */}
             </Routes>
           </main>
         </div>
