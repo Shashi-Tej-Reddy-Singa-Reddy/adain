@@ -1,3 +1,5 @@
+import './Signup.css'; // import the CSS file
+
 // // src/Signup.js
 // import React, { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
