@@ -519,6 +519,8 @@ app.get('/api/shared-expenses/:userId', async (req, res) => {
 });
 
 
+
+
 /* ======================= START THE SERVER ======================= */
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
