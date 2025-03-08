@@ -449,6 +449,75 @@ app.get('/api/expenses/:userId', async (req, res) => {
     res.status(500).json({ message: 'Error fetching expenses', error });
   }
 });
+/* ======================= NEW SCHEMA DEFINITIONS ======================= */
+
+// Shared Expense Schema – stores which expense is shared, by whom, with whom and how much.
+const sharedExpenseSchema = new mongoose.Schema({
+  expense: { type: mongoose.Schema.Types.ObjectId, ref: 'Expense', required: true },
+  sharedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  sharedWith: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  sharedAmount: { type: Number, required: true },
+  sharedAt: { type: Date, default: Date.now },
+});
+
+const SharedExpense = mongoose.model('SharedExpense', sharedExpenseSchema);
+
+/* ======================= NEW ROUTE HANDLERS ======================= */
+
+// 1. Get list of all users (for the dropdown). Optionally, you could exclude the current user in the client.
+app.get('/api/users', async (req, res) => {
+  try {
+    const users = await User.find({}, "name email");
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching users", error });
+  }
+});
+
+// 2. Share Expense Endpoint – creates a shared expense record.
+app.post('/api/expenses/share', async (req, res) => {
+  try {
+    const { expenseId, sharedBy, sharedWith, sharedAmount } = req.body;
+    const expense = await Expense.findById(expenseId);
+    if (!expense) {
+      return res.status(404).json({ message: "Expense not found" });
+    }
+    // Validate the amount to share does not exceed the original expense amount.
+    if (sharedAmount > expense.amount) {
+      return res.status(400).json({ message: "Shared amount exceeds original expense amount" });
+    }
+    // Create the shared expense record.
+    const sharedExpense = new SharedExpense({
+      expense: expenseId,
+      sharedBy,
+      sharedWith,
+      sharedAmount,
+    });
+    await sharedExpense.save();
+    res.status(201).json({ message: "Expense shared successfully", sharedExpense });
+  } catch (error) {
+    res.status(500).json({ message: "Error sharing expense", error });
+  }
+});
+
+// 3. Get Shared Expenses for a User – fetches records where the user is either the sender or the receiver.
+app.get('/api/shared-expenses/:userId', async (req, res) => {
+  try {
+    const sharedExpenses = await SharedExpense.find({
+      $or: [
+        { sharedBy: req.params.userId },
+        { sharedWith: req.params.userId },
+      ],
+    })
+      .populate('expense', 'amount category date')
+      .populate('sharedBy', 'name')
+      .populate('sharedWith', 'name');
+    res.status(200).json(sharedExpenses);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching shared expenses", error });
+  }
+});
+
 
 /* ======================= START THE SERVER ======================= */
 app.listen(PORT, () => {
